@@ -71,7 +71,9 @@ class MultiplicationCypher():
         l = [x[2] for x in sorted(l, key = lambda x: x[1])]
 
         # Replace values > 9 with separate digits
-        for i in range(len(l) - 1, -1, -1):
-            if l[i] > 9:
-                l[i:i + 1] = [l[i] // 10, l[i] % 10]
+        while max(l) > 9:
+          m = max(l)
+          i = l.index(m)
+          l[i:i+1] = [m // 10, m % 10]
+
         self.encoded_key = l
