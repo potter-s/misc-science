@@ -17,7 +17,7 @@ class MultiplicationCypher():
             s2.append(self.alph_shift(s[i], v[i % len(v)] * direction))
         return ''.join(s2)
 
-    def decrypt_message(self, s, date = 8):
+    def decrypt_message(self, s, date):
         dec = []
         mk = self.mult_key(date)
         message = s.replace(' ', 'X').upper()
@@ -27,7 +27,7 @@ class MultiplicationCypher():
             mlen -= 1
         return dm[:mlen]
 
-    def encrypt_message(self, s, date = 8):
+    def encrypt_message(self, s, date):
         enc = []
         mk = self.mult_key(date)
         message = self.pad_message(s.upper(), len(mk))
@@ -53,9 +53,11 @@ class MultiplicationCypher():
             mk.append(c)
         return mk[::-1]
 
+    # Encode key as a vector of 'key values' based on
+    # relative position of each letter in the alphabet
     def encode_key(self):
         k = self.key
-        # Position of each letter in the key to enable sorting
+        # Add the position of each letter in the key to enable sorting
         # back to original order
         l = list(zip(k, range(len(k))))
         l = sorted(l, key = lambda x: x[0])
@@ -73,11 +75,3 @@ class MultiplicationCypher():
             if l[i] > 9:
                 l[i:i + 1] = [l[i] // 10, l[i] % 10]
         self.encoded_key = l
-
-
-#engine = MultipicationCypher('CONSTANTINOPLE')
-#message = 'fffffIhave arrivedandingoodhealthxfritz '
-#enc_message = engine.encrypt_message(message, 8)
-#print(enc_message)
-#dec_message = engine.decrypt_message(enc_message, 8)
-#print(dec_message)
