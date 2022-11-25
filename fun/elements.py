@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 
 # Credit for finding all ways to split a string:
-#https://www.geeksforgeeks.org/find-all-possible-ways-to-split-the-given-string-into-primes/
+# https://www.geeksforgeeks.org/find-all-possible-ways-to-split-the-given-string-into-primes/
+# Simple (non-recursive) approach
 
 import sys
 
