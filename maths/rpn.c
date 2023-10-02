@@ -113,6 +113,11 @@ int stack_mult(stack *st)
 	stack_push(st, stack_pop(st) * stack_pop(st));
 }
 
+int stack_pow(stack *st)
+{
+	stack_push(st, pow(stack_pop(st), stack_pop(st)));
+}
+
 int stack_add(stack *st)
 {
 	stack_push(st, stack_pop(st) + stack_pop(st));
@@ -146,7 +151,7 @@ int stack_div(stack *st)
 }
 
 int register_ops(registry **ppops) {
-	*ppops = (registry *) malloc(8 * sizeof(registry));
+	*ppops = (registry *) malloc(9 * sizeof(registry));
 	registry *pops = *ppops;
 
 	pops->op = '+';
@@ -161,6 +166,9 @@ int register_ops(registry **ppops) {
 	pops->op = '/';
 	pops->nstack = 2;
 	pops++->fn = &stack_div;
+	pops->op = '^';
+	pops->nstack = 2;
+	pops++->fn = &stack_pow;
 
 	pops->op = 's';
 	pops->nstack = 1;
@@ -205,7 +213,7 @@ int main(int argc, char **argv)
 			stack_push(&st, *val);
 		}
 		// maths operations
-		else if (sscanf(line, "%1[+-/*%sqrd]\n", op) && strlen(op) == 1) {
+		else if (sscanf(line, "%1[+-/*^%sqrd]\n", op) && strlen(op) == 1) {
 			for (i = 0; i < nops; i++) {
 				if (*op == ops[i].op) {
 					if (st.len >= ops[i].nstack)
